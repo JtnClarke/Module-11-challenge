@@ -4,8 +4,9 @@ const path = require('path')
 const app = express()
 const PORT = process.env.PORT || 8000;
 const userNotes = require('./db/db.json');
-const { log } = require('console');
 
+const API_routes = require('./routes/API_routes')
+const html_routes = require('./routes/html_routes')
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
@@ -19,7 +20,7 @@ app.get('/', (req, res) =>
     res.sendFile(path.join(__dirname, './public/index.html'))
 );
 
-app.get('/api/notes', (req, res) => {
+app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, './public/notes.html'))
 })
 
