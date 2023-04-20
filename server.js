@@ -3,7 +3,8 @@ const express = require('express')
 const path = require('path')
 const app = express()
 const PORT = process.env.PORT || 8000;
-const userNotes = require('./db/db_json')
+const userNotes = require('./db/db.json');
+const { log } = require('console');
 
 
 app.use(express.urlencoded({ extended: true }))
@@ -26,22 +27,12 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'))
 })
 
-function clientNotes(body, noteArray) {
-    const newNote = body
-    if (!Array.isArray(noteArray))
-        notesArray = []
-
-    body.id = noteArray[0]
-    noteArray[0]++
-    noteArray.push(newNote)
-    fs.writeFileSync(
-        path.join(__dirname, './db/db.json'),
-        JSON.stringify(noteArray, null, 2)
-    )
-
-}
 app.post('/api/notes', (req, res) => {
     const newNote = clientNotes(req.body, userNotes)
     
     res.json(newNote)
+})
+
+app.listen(PORT, ()=> {
+    console.log(`API is now on port ${PORT}`)
 })
